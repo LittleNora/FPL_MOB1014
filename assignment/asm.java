@@ -2,17 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package asm1;
+package assignment;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  *
  * @author QuangVinh
  */
-public class asm1 {
+public class asm {
 
     static Scanner input = new Scanner(System.in);
     static Employee emp;

@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author QuangVinh
  */
-public class bai5 {
+public class bai05 {
 
     /**
      * @param args the command line arguments
