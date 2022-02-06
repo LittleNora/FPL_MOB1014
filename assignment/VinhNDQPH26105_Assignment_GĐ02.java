@@ -5,17 +5,20 @@
 package assignment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
  *
  * @author QuangVinh
  */
-public class asm {
+public class VinhNDQPH26105_Assignment_GĐ02 {
 
     static Scanner input = new Scanner(System.in);
-    static Employee emp;
-    static ArrayList<Employee> listEmps = new ArrayList<>();
+    static EmployeeClassAsm emp;
+    static ArrayList<EmployeeClassAsm> listEmps = new ArrayList<>();
+    static ArrayList<EmployeeClassAsm> listEmpsSortBySalary = new ArrayList<>();
 
     /**
      * @param args the command line arguments
@@ -62,28 +65,32 @@ public class asm {
                     System.out.println("\t========");
                     break;
                 case 3:
-                    findAsID();
+                    findById();
                     System.out.println("\t========");
                     break;
                 case 4:
-                    deleteEmp();
+                    deleteEmpById();
                     System.out.println("\t========");
                     break;
                 case 5:
-                    updateEmp();
+                    updateEmpById();
                     System.out.println("\t========");
                     break;
                 case 6:
-                    System.out.println("Ban da chon chuc nang tim nhan vien theo khoang luong");
+                    findBySalary();
+                    System.out.println("\t========");
                     break;
                 case 7:
-                    System.out.println("Ban da chon chuc nang sap xep nhan vien theo ho va ten");
+                    sortByName();
+                    System.out.println("\t========");
                     break;
                 case 8:
-                    System.out.println("Ban da chon chuc nang sap xep nhan vien theo thu nhap");
+                    sortBySalary();
+                    System.out.println("\t========");
                     break;
                 case 9:
-                    System.out.println("Ban da chon chuc nang in ra top 5 nhan vien thu nhap cao nhat");
+                    showTopSalary();
+                    System.out.println("\t========");
                     break;
                 case 10:
                     System.out.println("Ban da chon ket thuc chuong trinh");
@@ -100,7 +107,7 @@ public class asm {
             try {
                 System.out.print("Hay nhap vao so luong nhan vien muon nhap: ");
                 n = Integer.parseInt(input.nextLine());
-                if (n <= 1) {
+                if (n < 1) {
                     System.out.println("So luong nhap vao khong hop le. Hay nhap lai");
                 } else {
                     break;
@@ -110,10 +117,14 @@ public class asm {
             }
         } while (true);
         for (int i = 0; i < n; i++) {
+            emp = new EmployeeClassAsm();
+
             System.out.println("Nhap vao thong tin nhan vien thu " + (i + 1));
-            emp = new Employee();
             emp.setData();
+
             listEmps.add(emp);
+            listEmpsSortBySalary.add(emp);
+
             System.out.println("\t**********");
         }
     }
@@ -123,43 +134,50 @@ public class asm {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
-        for (Employee x : listEmps) {
+
+        for (EmployeeClassAsm eachEmp : listEmps) {
             System.out.println("Thong tin nhan vien");
-            x.showData();
+            eachEmp.showFullData();
             System.out.println("\t**********\n");
         }
     }
 
-    public static void findAsID() {
+    public static void findById() {
         String id_input;
+
         if (listEmps.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
+
         System.out.print("Nhap ma nhan vien muon tim: ");
         id_input = input.nextLine();
-        for (Employee x : listEmps) {
-            if (id_input.equalsIgnoreCase(x.id)) {
+        for (EmployeeClassAsm eachEmp : listEmps) {
+            if (id_input.equalsIgnoreCase(eachEmp.id)) {
                 System.out.println("Thong tin nhan vien co ma " + id_input + ":");
-                x.showData();
+                eachEmp.showFullData();
                 return;
             }
         }
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
-    public static void deleteEmp() {
+    public static void deleteEmpById() {
         String id_input;
+
         if (listEmps.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
-        System.out.print("Nhap ma nhan vien muon tim: ");
+
+        System.out.print("Nhap ma nhan vien muon xoa: ");
         id_input = input.nextLine();
         for (int i = 0; i < listEmps.size(); i++) {
             if (id_input.equalsIgnoreCase(listEmps.get(i).id)) {
                 System.out.println("Da tim thay nhan vien co ma " + id_input);
                 listEmps.remove(i);
+                listEmpsSortBySalary = listEmps;
+
                 System.out.println("Xoa thanh cong nhan vien co ma " + id_input);
                 return;
             }
@@ -167,29 +185,143 @@ public class asm {
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
-    public static void updateEmp() {
+    public static void updateEmpById() {
         String id_input;
+
         if (listEmps.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
+
         System.out.print("Nhap ma nhan vien muon tim: ");
         id_input = input.nextLine();
+
         for (int i = 0; i < listEmps.size(); i++) {
             if (id_input.equalsIgnoreCase(listEmps.get(i).id)) {
                 System.out.println("Da tim thay nhan vien co ma " + id_input);
-                emp = new Employee();
+                emp = new EmployeeClassAsm();
                 emp.updateData(id_input);
+
                 listEmps.set(i, emp);
+                listEmpsSortBySalary = listEmps;
+
                 System.out.println("Cap nhat thong tin nhan vien co ma " + id_input + " thanh cong");
                 return;
             }
         }
+
         System.out.println("Khong tim thay ma nhan vien.");
+
+    }
+
+    public static void findBySalary() {
+        boolean check = true;
+        double firstValue;
+        double lastValue;
+
+        if (listEmps.isEmpty()) {
+            System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
+            return;
+        }
+
+        firstValue = checkNumDou("gia tri luong dau (trieu dong)");
+        lastValue = checkNumDou("gia tri luong cuoi (trieu dong)");
+
+        if (firstValue >= lastValue) {
+            double temp = firstValue;
+            firstValue = lastValue;
+            lastValue = temp;
+        }
+
+        for (EmployeeClassAsm eachEmp : listEmps) {
+            if (emp.getTotalSalary() >= firstValue && eachEmp.getTotalSalary() <= lastValue) {
+                check = false;
+                eachEmp.showSubData();
+            }
+        }
+
+        if (check) {
+            System.out.println("Khong tim thay nhan vien trong khoang luong ban nhap");
+        }
+
+    }
+
+    public static void sortByName() {
+        if (listEmps.isEmpty()) {
+            System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
+            return;
+        }
+
+        Comparator<EmployeeClassAsm> comp = new Comparator<>() {
+            @Override
+            public int compare(EmployeeClassAsm o1, EmployeeClassAsm o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        };
+
+        Collections.sort(listEmps, comp);
+
+        System.out.println("Sap xep nhan vien theo ten thanh cong\n");
+
+        System.out.println("Thong tin nhan vien");
+        showData(listEmps, listEmps.size());
+    }
+
+    public static void sortBySalary() {
+        if (listEmps.isEmpty()) {
+            System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
+            return;
+        }
+
+        sortSalary(listEmps);
+
+        System.out.println("Sap xep nhan vien theo khoang luong thanh cong\n");
+
+        System.out.println("Thong tin nhan vien");
+        showData(listEmps, listEmps.size());
+    }
+
+    public static void showTopSalary() {
+        int num = 5;
+
+        if (listEmps.isEmpty()) {
+            System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
+            return;
+        }
+
+        sortSalary(listEmpsSortBySalary);
+
+        if (listEmpsSortBySalary.size() <= 5) {
+            num = listEmpsSortBySalary.size();
+            System.out.printf("Chi co %d nhan vien. Top nhan vien co thu nhap theo thu tu giam dan la:\n", listEmpsSortBySalary.size());
+        } else {
+            System.out.println("Top 5 nhan vien co thu nhap cao nhat theo thu tu giam dan la:");
+        }
+        
+        showData(listEmpsSortBySalary, num);
+    }
+
+    public static void showData(ArrayList listShow, int num) {
+        for (int i = 0; i < num; i++) {
+            EmployeeClassAsm eachEmp = (EmployeeClassAsm) listShow.get(i);
+            eachEmp.showSubData();
+        }
+    }
+
+    public static void sortSalary(ArrayList listSort) {
+        Comparator<EmployeeClassAsm> comp = new Comparator<>() {
+            @Override
+            public int compare(EmployeeClassAsm o1, EmployeeClassAsm o2) {
+                return o1.getTotalSalary() > o2.getTotalSalary() ? -1 : 1;
+            }
+        };
+
+        Collections.sort(listSort, comp);
     }
 
     public static int checkNumInt(String nameNum) {
         int num;
+
         do {
             try {
                 System.out.printf("Hay nhap vao %s: ", nameNum);
@@ -203,11 +335,13 @@ public class asm {
                 System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
             }
         } while (true);
+
         return num;
     }
 
     public static double checkNumDou(String nameNum) {
         double num;
+
         do {
             try {
                 System.out.printf("Hay nhap vao %s: ", nameNum);
@@ -221,6 +355,7 @@ public class asm {
                 System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
             }
         } while (true);
+
         return num;
     }
 }

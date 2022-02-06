@@ -10,25 +10,30 @@ import java.util.Scanner;
  *
  * @author QuangVinh
  */
-public class Employee {
+public class EmployeeClassAsm {
 
-    String id, name;
-    double salary, commissionRate, responSalary, sale;
-    int choice, position_id;
+    String id;
+    String name;
+    double salary;
+    double commissionRate;
+    double responSalary;
+    double sale;
+    int choice;
+    int position_id;
     static Scanner input = new Scanner(System.in);
 
-    public Employee() {
+    public EmployeeClassAsm() {
     }
 
-    public Employee(String id, String name, double salary, double commissionRate, double responSalary, double sale, int position_id, int choice) {
+    public EmployeeClassAsm(String id, String name, double salary, double commissionRate, double responSalary, double sale, int choice, int position_id) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.commissionRate = commissionRate;
         this.responSalary = responSalary;
         this.sale = sale;
-        this.position_id = position_id;
         this.choice = choice;
+        this.position_id = position_id;
     }
 
     public String getId() {
@@ -159,27 +164,57 @@ public class Employee {
             case 1:
                 break;
             case 2:
-                sale = inputNum("doanh so ban hang");
+                sale = inputNum("doanh so ban hang (trieu dong)");
                 commissionRate = inputNum("ti le hoa hong (%)");
                 break;
             case 3:
-                responSalary = inputNum("luong trach nhiem");
+                responSalary = inputNum("luong trach nhiem (trieu dong)");
                 break;
         }
     }
 
-    public void showData() {
+    public void showFullData() {
         System.out.println("Ma nhan vien: " + id);
         System.out.println("Ten nhan vien: " + name);
-        System.out.printf("Luong: %.1f trieu VND", salary);
+        System.out.printf("Luong nhan vien: %.1f trieu VND", salary);
         if (sale != 0 && commissionRate != 0) {
-            System.out.println("\nDoanh so ban hang: " + sale);
+            System.out.println("\nDoanh so ban hang: " + sale + " trieu VND");
             System.out.print("Ty le hoa hong:  " + commissionRate + "%");
 
         } else if (responSalary != 0) {
             System.out.printf("\nLuong trach nhiem: %.1f trieu VND", responSalary);
         }
+        System.out.printf("\nTong luong: %.1f trieu VND\n", getTotalSalary());
+        System.out.printf("Thue phai dong: %.1f trieu VND\n", getIncomeTax());
         System.out.println("");
+    }
+
+    public void showSubData() {
+        System.out.printf("Ma: %s | Ten: %s | Luong: %.1f trieu VND\n", id, name, getTotalSalary());
+    }
+
+    public double getTotalSalary() {
+        double totalSalary;
+        if (sale != 0 && commissionRate != 0) {
+            totalSalary = salary + sale * (commissionRate / 100);
+        } else if (responSalary != 0) {
+            totalSalary = salary + responSalary;
+        } else {
+            totalSalary = salary;
+        }
+        return totalSalary;
+    }
+
+    public double getIncomeTax() {
+        double incomeTaxPer;
+        if (getTotalSalary() < 9) {
+            incomeTaxPer = 0;
+        } else if (getTotalSalary() >= 9 && getTotalSalary() <= 15) {
+            incomeTaxPer = 0.1;
+        } else {
+            incomeTaxPer = 0.12;
+        }
+        return getTotalSalary() * incomeTaxPer;
     }
 
     public int inputNum(String nameNum) {
