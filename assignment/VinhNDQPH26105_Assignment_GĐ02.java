@@ -30,6 +30,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
 
     public static void menu() {
         int choice;
+        
         do {
             System.out.println("Menu Assignment:");
             System.out.println("1. Nhap danh sach nhan vien");
@@ -42,6 +43,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
             System.out.println("8. Sap xep nhan vien theo thu nhap");
             System.out.println("9. Top 5 nhan vien co doanh thu cao nhat");
             System.out.println("10. Ket thuc chuong trinh");
+            
             do {
                 try {
                     System.out.print("Lua chon cua ban: ");
@@ -55,6 +57,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                     System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
                 }
             } while (true);
+            
             switch (choice) {
                 case 1:
                     addEmps();
@@ -102,12 +105,13 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
     }
 
     public static void addEmps() {
-        int n;
+        int quantity;
+        
         do {
             try {
                 System.out.print("Hay nhap vao so luong nhan vien muon nhap: ");
-                n = Integer.parseInt(input.nextLine());
-                if (n < 1) {
+                quantity = Integer.parseInt(input.nextLine());
+                if (quantity < 1) {
                     System.out.println("So luong nhap vao khong hop le. Hay nhap lai");
                 } else {
                     break;
@@ -116,7 +120,8 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                 System.out.println("Du lieu khong hop le. Hay nhap lai");
             }
         } while (true);
-        for (int i = 0; i < n; i++) {
+        
+        for (int i = 0; i < quantity; i++) {
             emp = new EmployeeClassAsm();
 
             System.out.println("Nhap vao thong tin nhan vien thu " + (i + 1));
@@ -159,6 +164,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                 return;
             }
         }
+        
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
@@ -182,6 +188,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                 return;
             }
         }
+        
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
@@ -193,7 +200,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
             return;
         }
 
-        System.out.print("Nhap ma nhan vien muon tim: ");
+        System.out.print("Nhap ma nhan vien muon cap nhat: ");
         id_input = input.nextLine();
 
         for (int i = 0; i < listEmps.size(); i++) {
@@ -241,7 +248,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
         }
 
         if (check) {
-            System.out.println("Khong tim thay nhan vien trong khoang luong ban nhap");
+            System.out.println("Khong tim thay nhan vien nao trong khoang luong ban nhap");
         }
 
     }
@@ -301,9 +308,9 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
         showData(listEmpsSortBySalary, num);
     }
 
-    public static void showData(ArrayList listShow, int num) {
+    public static void showData(ArrayList<EmployeeClassAsm> listShow, int num) {
         for (int i = 0; i < num; i++) {
-            EmployeeClassAsm eachEmp = (EmployeeClassAsm) listShow.get(i);
+            EmployeeClassAsm eachEmp = listShow.get(i);
             eachEmp.showSubData();
         }
     }

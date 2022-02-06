@@ -18,21 +18,19 @@ public class EmployeeClassAsm {
     double commissionRate;
     double responSalary;
     double sale;
-    int choice;
     int position_id;
     static Scanner input = new Scanner(System.in);
 
     public EmployeeClassAsm() {
     }
 
-    public EmployeeClassAsm(String id, String name, double salary, double commissionRate, double responSalary, double sale, int choice, int position_id) {
+    public EmployeeClassAsm(String id, String name, double salary, double commissionRate, double responSalary, double sale, int position_id) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.commissionRate = commissionRate;
         this.responSalary = responSalary;
         this.sale = sale;
-        this.choice = choice;
         this.position_id = position_id;
     }
 
@@ -92,19 +90,12 @@ public class EmployeeClassAsm {
         this.position_id = position_id;
     }
 
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
     public void setData() {
         System.out.println("Phan loai nhan vien");
         System.out.println("1. Nhan vien hanh chinh");
         System.out.println("2. Nhan vien tiep thi");
         System.out.println("3. Truong phong");
+        
         do {
             try {
                 System.out.print("Lua chon cua ban: ");
@@ -118,6 +109,7 @@ public class EmployeeClassAsm {
                 System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
             }
         } while (true);
+        
         System.out.print("Hay nhap vao ma nhan vien: ");
         id = input.nextLine();
         System.out.print("Hay nhap vao ten cua nhan vien: ");
@@ -142,6 +134,7 @@ public class EmployeeClassAsm {
         System.out.println("1. Nhan vien hanh chinh");
         System.out.println("2. Nhan vien tiep thi");
         System.out.println("3. Truong phong");
+        
         do {
             try {
                 System.out.print("Lua chon cua ban: ");
@@ -155,6 +148,7 @@ public class EmployeeClassAsm {
                 System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
             }
         } while (true);
+        
         id = id_input;
         System.out.print("Hay nhap vao ten cua nhan vien: ");
         name = input.nextLine();
@@ -177,6 +171,7 @@ public class EmployeeClassAsm {
         System.out.println("Ma nhan vien: " + id);
         System.out.println("Ten nhan vien: " + name);
         System.out.printf("Luong nhan vien: %.1f trieu VND", salary);
+        
         if (sale != 0 && commissionRate != 0) {
             System.out.println("\nDoanh so ban hang: " + sale + " trieu VND");
             System.out.print("Ty le hoa hong:  " + commissionRate + "%");
@@ -184,6 +179,7 @@ public class EmployeeClassAsm {
         } else if (responSalary != 0) {
             System.out.printf("\nLuong trach nhiem: %.1f trieu VND", responSalary);
         }
+        
         System.out.printf("\nTong luong: %.1f trieu VND\n", getTotalSalary());
         System.out.printf("Thue phai dong: %.1f trieu VND\n", getIncomeTax());
         System.out.println("");
@@ -196,17 +192,19 @@ public class EmployeeClassAsm {
     public double getTotalSalary() {
         double totalSalary;
         if (sale != 0 && commissionRate != 0) {
-            totalSalary = salary + sale * (commissionRate / 100);
+            totalSalary = salary + (sale * (commissionRate / 100));
         } else if (responSalary != 0) {
             totalSalary = salary + responSalary;
         } else {
             totalSalary = salary;
         }
+        
         return totalSalary;
     }
 
     public double getIncomeTax() {
         double incomeTaxPer;
+        
         if (getTotalSalary() < 9) {
             incomeTaxPer = 0;
         } else if (getTotalSalary() >= 9 && getTotalSalary() <= 15) {
@@ -217,12 +215,13 @@ public class EmployeeClassAsm {
         return getTotalSalary() * incomeTaxPer;
     }
 
-    public int inputNum(String nameNum) {
-        int num;
+    public double inputNum(String nameNum) {
+        double num;
+        
         do {
             try {
                 System.out.printf("Hay nhap vao %s: ", nameNum);
-                num = Integer.parseInt(input.nextLine());
+                num = Double.parseDouble(input.nextLine());
                 if (num <= 0) {
                     System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
                 } else {
@@ -232,6 +231,7 @@ public class EmployeeClassAsm {
                 System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
             }
         } while (true);
+        
         return num;
     }
 }
