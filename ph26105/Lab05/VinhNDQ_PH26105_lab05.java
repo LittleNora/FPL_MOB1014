@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package ph26105;
+package ph26105.Lab05;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -138,6 +138,7 @@ public class VinhNDQ_PH26105_lab05 {
         } else {
             System.out.println("- Tong so nhan vien Nam: " + countMale);
         }
+        
         if (countFemale == 0) {
             System.out.println("- Khong co nhan vien co gioi tinh \"Nu\"");
         } else {
