@@ -63,7 +63,6 @@ public class Student extends Person {
         this.engMark = engMark;
     }
 
-    @Override
     public void input() {
         super.input();
         stuID = super.checkRegex("ma sinh vien", regStuID);
@@ -72,7 +71,6 @@ public class Student extends Person {
         engMark = Integer.parseInt(super.checkRegex("diem tieng anh cua sinh vien", regMark));
     }
 
-    @Override
     public void display() {
         super.display();
         System.out.println("Ma sinh vien: " + stuID);
@@ -81,16 +79,12 @@ public class Student extends Person {
         System.out.println("Diem tieng anh: " + engMark);
         System.out.println("Trang thai: " + getStatus());
     }
-    
+
     public String getStatus() {
         return isPass() ? "Qua mon" : "Truot mon";
     }
 
     public Boolean isPass() {
-        if (engMark + mathMark >= 10 && engMark >= 5 && mathMark >= 5) {
-            return true;
-        } else {
-            return false;
-        }
+        return (engMark + mathMark >= 10 && engMark >= 5 && mathMark >= 5) ? true : false;
     }
 }

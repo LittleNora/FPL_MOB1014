@@ -68,16 +68,16 @@ public class Person {
     }
 
     public String checkRegex(String nameVari, String regVari) {
-        String vari;
+        String variable;
         do {
             System.out.printf("Hay nhap vao %s: ", nameVari);
-            vari = ip.nextLine();
-            if (!vari.matches(regVari)) {
+            variable = ip.nextLine();
+            if (!variable.matches(regVari)) {
                 System.out.println("Du lieu nhap khong hop le. Hay nhap lai");
             } else {
                 break;
             }
         } while (true);
-        return vari;
+        return variable;
     }
 }

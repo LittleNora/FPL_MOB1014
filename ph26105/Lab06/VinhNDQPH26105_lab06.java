@@ -64,9 +64,29 @@ public class VinhNDQPH26105_lab06 {
     }
     
     public static void inputInfo() {
-        student = new Student();
-        student.input();
-        listStudents.add(student);
+        int quantity;
+
+        do {
+            try {
+                System.out.print("Hay nhap vao so luong sinh vien muon nhap: ");
+                quantity = Integer.parseInt(ip.nextLine());
+                if (quantity < 1) {
+                    System.out.println("So luong nhap vao khong hop le. Hay nhap lai");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Du lieu khong hop le. Hay nhap lai");
+            }
+        } while (true);
+
+        for (int i = 0; i < quantity; i++) {
+            System.out.println("\nThong tin nhan vien thu " + (i + 1));
+            student = new Student();
+            student.input();
+            listStudents.add(student);
+        }
+        
     }
     
     public static void showInfo() {
