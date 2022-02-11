@@ -1,9 +1,13 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package assignment;
 
+/**
+ *
+ * @author QuangVinh
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,141 +17,86 @@ import java.util.Scanner;
  *
  * @author QuangVinh
  */
-public class VinhNDQPH26105_Assignment_GĐ02 {
+public class ListEmps {
 
-    static Scanner input = new Scanner(System.in);
-    static EmployeeClassAsm emp;
     static ArrayList<EmployeeClassAsm> listEmps = new ArrayList<>();
     static ArrayList<EmployeeClassAsm> listEmpsSortBySalary = new ArrayList<>();
+    static int position_id;
+    static Scanner input = new Scanner(System.in);
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        menu();
-    }
+    public void setData() {
+        System.out.println("Phan loai nhan vien");
+        System.out.println("1. Nhan vien hanh chinh");
+        System.out.println("2. Nhan vien tiep thi");
+        System.out.println("3. Truong phong");
 
-    public static void menu() {
-        int choice;
-        
-        do {
-            System.out.println("Menu Assignment:");
-            System.out.println("1. Nhap danh sach nhan vien");
-            System.out.println("2. Xuat danh sach nhan vien");
-            System.out.println("3. Tim nhan vien theo ma");
-            System.out.println("4. Xoa nhan vien theo ma");
-            System.out.println("5. Cap nhat thong tin nhan vien theo ma");
-            System.out.println("6. Tim nhan vien theo khoang luong");
-            System.out.println("7. Sap xep nhan vien theo ho va ten");
-            System.out.println("8. Sap xep nhan vien theo thu nhap");
-            System.out.println("9. Top 5 nhan vien co doanh thu cao nhat");
-            System.out.println("10. Ket thuc chuong trinh");
-            
-            do {
-                try {
-                    System.out.print("Lua chon cua ban: ");
-                    choice = Integer.parseInt(input.nextLine());
-                    if (choice < 1 || choice > 10) {
-                        System.out.println("Lua chon khong hop le. Hay nhap lai.");
-                    } else {
-                        break;
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
-                }
-            } while (true);
-            
-            switch (choice) {
-                case 1:
-                    addEmps();
-                    System.out.println("\t========");
-                    break;
-                case 2:
-                    showEmps();
-                    System.out.println("\t========");
-                    break;
-                case 3:
-                    findById();
-                    System.out.println("\t========");
-                    break;
-                case 4:
-                    deleteEmpById();
-                    System.out.println("\t========");
-                    break;
-                case 5:
-                    updateEmpById();
-                    System.out.println("\t========");
-                    break;
-                case 6:
-                    findBySalary();
-                    System.out.println("\t========");
-                    break;
-                case 7:
-                    sortByName();
-                    System.out.println("\t========");
-                    break;
-                case 8:
-                    sortBySalary();
-                    System.out.println("\t========");
-                    break;
-                case 9:
-                    showTopSalary();
-                    System.out.println("\t========");
-                    break;
-                case 10:
-                    System.out.println("Ban da chon ket thuc chuong trinh");
-                    return;
-                default:
-                    throw new AssertionError();
-            }
-        } while (true);
-    }
-
-    public static void addEmps() {
-        int quantity;
-        
         do {
             try {
-                System.out.print("Hay nhap vao so luong nhan vien muon nhap: ");
-                quantity = Integer.parseInt(input.nextLine());
-                if (quantity < 1) {
-                    System.out.println("So luong nhap vao khong hop le. Hay nhap lai");
+                System.out.print("Lua chon cua ban: ");
+                position_id = Integer.parseInt(input.nextLine());
+                if (position_id < 1 || position_id > 3) {
+                    System.out.println("Lua chon khong hop le. Hay nhap lai.");
                 } else {
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Du lieu khong hop le. Hay nhap lai");
+                System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
             }
         } while (true);
-        
-        for (int i = 0; i < quantity; i++) {
-            emp = new EmployeeClassAsm();
 
-            System.out.println("Nhap vao thong tin nhan vien thu " + (i + 1));
-            emp.setData();
-
-            listEmps.add(emp);
-            listEmpsSortBySalary.add(emp);
-
-            System.out.println("\t**********");
+        switch (position_id) {
+            case 1:
+                OfficeEmpClassAsm officeEmp = new OfficeEmpClassAsm();
+                officeEmp.setData();
+                listEmps.add(officeEmp);
+                break;
+            case 2:
+                SaleEmpClassAsm saleEmp = new SaleEmpClassAsm();
+                saleEmp.setData();
+                listEmps.add(saleEmp);
+                break;
+            case 3:
+                ManageEmpClassAsm manageEmp = new ManageEmpClassAsm();
+                manageEmp.setData();
+                listEmps.add(manageEmp);
+                break;
         }
+        listEmpsSortBySalary = listEmps;
     }
 
-    public static void showEmps() {
+    public void showFullData() {
         if (listEmps.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
 
+        System.out.print("Thong tin nhan vien:\n\n");
         for (EmployeeClassAsm eachEmp : listEmps) {
-            System.out.println("Thong tin nhan vien");
-            eachEmp.showFullData();
-            System.out.println("\t**********\n");
+            if (eachEmp instanceof OfficeEmpClassAsm) {
+                ((OfficeEmpClassAsm) eachEmp).showFullData();
+            } else if (eachEmp instanceof SaleEmpClassAsm) {
+                ((SaleEmpClassAsm) eachEmp).showFullData();
+            } else if (eachEmp instanceof ManageEmpClassAsm) {
+                ((ManageEmpClassAsm) eachEmp).showFullData();
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
+    public void showSubData() {
+        for (EmployeeClassAsm eachEmp : listEmps) {
+            if (eachEmp instanceof OfficeEmpClassAsm) {
+                ((OfficeEmpClassAsm) eachEmp).showSubData();
+            } else if (eachEmp instanceof SaleEmpClassAsm) {
+                ((SaleEmpClassAsm) eachEmp).showSubData();
+            } else if (eachEmp instanceof ManageEmpClassAsm) {
+                ((ManageEmpClassAsm) eachEmp).showSubData();
+            }
         }
     }
 
-    public static void findById() {
+    public static void findByID() {
         String id_input;
 
         if (listEmps.isEmpty()) {
@@ -164,11 +113,11 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                 return;
             }
         }
-        
+
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
-    public static void deleteEmpById() {
+    public static void deleteEmpByID() {
         String id_input;
 
         if (listEmps.isEmpty()) {
@@ -188,11 +137,11 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
                 return;
             }
         }
-        
+
         System.out.println("Khong tim thay ma nhan vien.");
     }
 
-    public static void updateEmpById() {
+    public static void updateEmpByID() {
         String id_input;
 
         if (listEmps.isEmpty()) {
@@ -206,42 +155,80 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
         for (int i = 0; i < listEmps.size(); i++) {
             if (id_input.equalsIgnoreCase(listEmps.get(i).id)) {
                 System.out.println("Da tim thay nhan vien co ma " + id_input);
-                emp = new EmployeeClassAsm();
-                emp.updateData(id_input);
+                System.out.println("Phan loai nhan vien");
+                System.out.println("1. Nhan vien hanh chinh");
+                System.out.println("2. Nhan vien tiep thi");
+                System.out.println("3. Truong phong");
 
-                listEmps.set(i, emp);
+                do {
+                    try {
+                        System.out.print("Lua chon cua ban: ");
+                        position_id = Integer.parseInt(input.nextLine());
+                        if (position_id < 1 || position_id > 3) {
+                            System.out.println("Lua chon khong hop le. Hay nhap lai.");
+                        } else {
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Gia tri nhap khong hop le. Hay nhap lai.");
+                    }
+                } while (true);
+
+                switch (position_id) {
+                    case 1:
+                        OfficeEmpClassAsm officeEmp = new OfficeEmpClassAsm();
+                        officeEmp.updateData(id_input);
+                        listEmps.set(i, officeEmp);
+                        break;
+                    case 2:
+                        SaleEmpClassAsm saleEmp = new SaleEmpClassAsm();
+                        saleEmp.updateData(id_input);
+                        listEmps.set(i, saleEmp);
+                        break;
+                    case 3:
+                        ManageEmpClassAsm manageEmp = new ManageEmpClassAsm();
+                        manageEmp.updateData(id_input);
+                        listEmps.set(i, manageEmp);
+                        break;
+                }
                 listEmpsSortBySalary = listEmps;
-
                 System.out.println("Cap nhat thong tin nhan vien co ma " + id_input + " thanh cong");
                 return;
             }
         }
-
-        System.out.println("Khong tim thay ma nhan vien.");
-
+        System.out.println("Khong tim thay ma nhan vien");
     }
 
     public static void findBySalary() {
         boolean check = true;
-        double firstValue;
-        double lastValue;
+        double min;
+        double max;
+        double totalSalary = 0;
 
         if (listEmps.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay them nhan vien.");
             return;
         }
 
-        firstValue = checkNumDou("gia tri luong dau (trieu dong)");
-        lastValue = checkNumDou("gia tri luong cuoi (trieu dong)");
+        min = checkNumDou("gia tri luong dau (trieu dong)");
+        max = checkNumDou("gia tri luong cuoi (trieu dong)");
 
-        if (firstValue >= lastValue) {
-            double temp = firstValue;
-            firstValue = lastValue;
-            lastValue = temp;
+        if (min >= max) {
+            double temp = min;
+            min = max;
+            max = temp;
         }
 
         for (EmployeeClassAsm eachEmp : listEmps) {
-            if (emp.getTotalSalary() >= firstValue && eachEmp.getTotalSalary() <= lastValue) {
+            if (eachEmp instanceof OfficeEmpClassAsm) {
+                totalSalary = ((OfficeEmpClassAsm) eachEmp).getTotalSalary();
+            } else if (eachEmp instanceof SaleEmpClassAsm) {
+                totalSalary = ((SaleEmpClassAsm) eachEmp).getTotalSalary();
+            } else if (eachEmp instanceof ManageEmpClassAsm) {
+                totalSalary = ((ManageEmpClassAsm) eachEmp).getTotalSalary();
+            }
+
+            if (totalSalary >= min && totalSalary <= max) {
                 check = false;
                 eachEmp.showSubData();
             }
@@ -304,7 +291,7 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
         } else {
             System.out.println("Top 5 nhan vien co thu nhap cao nhat theo thu tu giam dan la:");
         }
-        
+
         showData(listEmpsSortBySalary, num);
     }
 
@@ -319,31 +306,29 @@ public class VinhNDQPH26105_Assignment_GĐ02 {
         Comparator<EmployeeClassAsm> comp = new Comparator<>() {
             @Override
             public int compare(EmployeeClassAsm o1, EmployeeClassAsm o2) {
-                return o1.getTotalSalary() > o2.getTotalSalary() ? -1 : 1;
+                double salary1 = 0;
+                double salary2 = 0;
+                if (o1 instanceof OfficeEmpClassAsm) {
+                    salary1 = ((OfficeEmpClassAsm) o1).getTotalSalary();
+                } else if (o1 instanceof SaleEmpClassAsm) {
+                    salary1 = ((SaleEmpClassAsm) o1).getTotalSalary();
+                } else if (o1 instanceof ManageEmpClassAsm) {
+                    salary1 = ((ManageEmpClassAsm) o1).getTotalSalary();
+                }
+
+                if (o2 instanceof OfficeEmpClassAsm) {
+                    salary2 = ((OfficeEmpClassAsm) o2).getTotalSalary();
+                } else if (o2 instanceof SaleEmpClassAsm) {
+                    salary2 = ((SaleEmpClassAsm) o2).getTotalSalary();
+                } else if (o2 instanceof ManageEmpClassAsm) {
+                    salary2 = ((ManageEmpClassAsm) o2).getTotalSalary();
+                }
+
+                return salary1 > salary2 ? -1 : 1;
             }
         };
 
         Collections.sort(listSort, comp);
-    }
-
-    public static int checkNumInt(String nameNum) {
-        int num;
-
-        do {
-            try {
-                System.out.printf("Hay nhap vao %s: ", nameNum);
-                num = Integer.parseInt(input.nextLine());
-                if (num <= 0) {
-                    System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
-                } else {
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Gia tri nhap khong hop le. Hay nhap lai");
-            }
-        } while (true);
-
-        return num;
     }
 
     public static double checkNumDou(String nameNum) {
