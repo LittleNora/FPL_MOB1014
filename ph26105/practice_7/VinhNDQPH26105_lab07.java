@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author QuangVinh
  */
-public class Test {
+public class VinhNDQPH26105_lab07 {
 
     static Scanner input = new Scanner(System.in);
     static ArrayList<Nhanvien> listNhanVien = new ArrayList<>();
@@ -107,6 +107,7 @@ public class Test {
     public static void inDSKySu() {
         if (listKySu.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay nhap lai.");
+            return;
         }
 
         System.out.println("Danh sach ky su:");
@@ -118,6 +119,7 @@ public class Test {
     public static void inDSCongNhan() {
         if (listCongNhan.isEmpty()) {
             System.out.println("Danh sach nhan vien dang trong. Hay nhap lai.");
+            return;
         }
 
         System.out.println("Danh sach cong nhan:");
