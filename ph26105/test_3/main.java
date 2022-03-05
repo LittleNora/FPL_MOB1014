@@ -73,7 +73,6 @@ public class main {
 
     public static void inputLaptop() {
         int quantity;
-        int choice;
         quantity = inputQuantity();
         for (int i = 0; i < quantity; i++) {
             System.out.println("Nhap thong tin laptop thu " + (i + 1));
